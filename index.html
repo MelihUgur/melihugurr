@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM atılsın mı?</title>
+    <style>
+        body {
+            font-size: 20px; /* Yazı boyutunu ayarla */
+            position: relative; /* Relatif pozisyon */
+        }
+        
+        h1 {
+            font-size: 2em; /* Başlık boyutunu ayarla */
+        }
+        
+        button {
+            font-size: 1.5em; /* Buton boyutunu ayarla */
+            padding: 10px 20px; /* Buton kenar boşluğunu ayarla */
+        }
+
+        #noButton {
+            position: absolute; /* Mutlak pozisyon */
+        }
+
+        img {
+            position: absolute; /* Resim pozisyonunu mutlak yap */
+            right: 0; /* Resmi sağa yerleştir */
+            margin-top: 50px; /* Opsiyonel: Resmi yukarı it */
+        }
+    </style>
+</head>
+<body>
+    <h1>DM atılsın mı?</h1>
+    <img src="https://upload.wikimedia.org/wikipedia/tr/9/97/%C5%9Eim%C5%9Fek_McQueen.jpg" alt="Şimşek McQueen">
+    <button id="yesButton">Evet</button>
+    <button id="noButton">Hayır</button>
+
+    <script>
+        document.getElementById("yesButton").addEventListener("click", function() {
+            window.open("https://www.instagram.com/melihu_gur/", "_blank");
+        });
+
+        function moveNoButton(event) {
+            var buttonNo = document.getElementById("noButton");
+            var buttonRect = buttonNo.getBoundingClientRect();
+            var x = Math.floor(Math.random() * (window.innerWidth - buttonRect.width));
+            var y = Math.floor(Math.random() * (window.innerHeight - buttonRect.height));
+            buttonNo.style.left = x + "px";
+            buttonNo.style.top = y + "px";
+        }
+
+        document.getElementById("noButton").addEventListener("mouseover", moveNoButton);
+
+        document.addEventListener("mousemove", function(event) {
+            var buttonNo = document.getElementById("noButton");
+            var buttonRect = buttonNo.getBoundingClientRect();
+            var x = event.clientX;
+            var y = event.clientY;
+            if (x >= buttonRect.left && x <= buttonRect.right && y >= buttonRect.top && y <= buttonRect.bottom) {
+                moveNoButton();
+            }
+        });
+    </script>
+</body>
+</html>
