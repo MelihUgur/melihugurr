@@ -1,65 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DM?</title>
+    <title>Selamün Alekyüm</title>
     <style>
         body {
-            font-size: 20px; /* Yazı boyutunu ayarla */
-            position: relative; /* Relatif pozisyon */
+            font-size: 20px;
+            position: relative;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
         }
         
         h1 {
-            font-size: 2em; /* Başlık boyutunu ayarla */
+            font-size: 2em;
         }
         
         button {
-            font-size: 1.5em; /* Buton boyutunu ayarla */
-            padding: 10px 20px; /* Buton kenar boşluğunu ayarla */
+            font-size: 1.5em;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
         }
 
         #noButton {
-            position: absolute; /* Mutlak pozisyon */
+            position: absolute;
         }
 
-        img {
-            position: absolute; /* Resim pozisyonunu mutlak yap */
-            right: 0; /* Resmi sağa yerleştir */
-            margin-top: 50px; /* Opsiyonel: Resmi yukarı it */
+        #mainImage {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 300px;
+        }
+
+        /* Tam ekran PNG */
+        #overlayImage {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            cursor: pointer;
+            z-index: 9999;
         }
     </style>
 </head>
 <body>
-    <h1>DM?</h1>
-    <img src="https://upload.wikimedia.org/wikipedia/tr/9/97/%C5%9Eim%C5%9Fek_McQueen.jpg" alt="Şimşek McQueen">
-    <button id="yesButton">Evet</button>
-    <button id="noButton">Hayır</button>
+    <h1 id="mainTitle">Selamün Alekyüm</h1>
+    <img id="mainImage" src="https://upload.wikimedia.org/wikipedia/tr/9/97/%C5%9Eim%C5%9Fek_McQueen.jpg" alt="Şimşek McQueen">
+    <button id="yesButton">AS</button>
+    <button id="noButton">YOOK</button>
+
+    <!-- Tam ekran PNG (sen kendi linkini buraya koyacaksın) -->
+    <img id="overlayImage" src="https://i.pinimg.com/736x/5b/b8/ab/5bb8ab389780ecb7451e8f5c137b8fae.jpg" alt="Overlay">
 
     <script>
-        document.getElementById("yesButton").addEventListener("click", function() {
-            window.open("https://www.instagram.com/melihu_gur/", "_blank");
-        });
+        const noButton = document.getElementById("noButton");
+        const yesButton = document.getElementById("yesButton");
+        const title = document.getElementById("mainTitle");
+        const image = document.getElementById("mainImage");
+        const overlayImage = document.getElementById("overlayImage");
 
-        function moveNoButton(event) {
-            var buttonNo = document.getElementById("noButton");
-            var buttonRect = buttonNo.getBoundingClientRect();
-            var x = Math.floor(Math.random() * (window.innerWidth - buttonRect.width));
-            var y = Math.floor(Math.random() * (window.innerHeight - buttonRect.height));
-            buttonNo.style.left = x + "px";
-            buttonNo.style.top = y + "px";
+        const texts = ["ASLA", "HAHA", "DENEME", "CATCH ME", "XD", "Kolaysın"];
+        let index = 0;
+        let scale = 1;
+        let step = 0; // 0 = ilk ekran, 1 = ikinci ekran
+
+        function resetButtons() {
+            scale = 1;
+            yesButton.style.transform = "scale(1)";
+            yesButton.innerText = "Evet";
+            noButton.innerText = "Yook";
+            noButton.style.left = "";
+            noButton.style.top = "";
         }
 
-        document.getElementById("noButton").addEventListener("mouseover", moveNoButton);
+        function moveNoButton() {
+            const buttonRect = noButton.getBoundingClientRect();
+            const x = Math.floor(Math.random() * (window.innerWidth - buttonRect.width));
+            const y = Math.floor(Math.random() * (window.innerHeight - buttonRect.height));
+            noButton.style.left = x + "px";
+            noButton.style.top = y + "px";
+
+            noButton.innerText = texts[index % texts.length];
+            index++;
+
+            scale += 0.1;
+            yesButton.style.transform = `scale(${scale})`;
+        }
+
+        noButton.addEventListener("mouseover", moveNoButton);
 
         document.addEventListener("mousemove", function(event) {
-            var buttonNo = document.getElementById("noButton");
-            var buttonRect = buttonNo.getBoundingClientRect();
-            var x = event.clientX;
-            var y = event.clientY;
+            const buttonRect = noButton.getBoundingClientRect();
+            const x = event.clientX;
+            const y = event.clientY;
             if (x >= buttonRect.left && x <= buttonRect.right && y >= buttonRect.top && y <= buttonRect.bottom) {
                 moveNoButton();
             }
+        });
+
+        yesButton.addEventListener("click", function() {
+            if (step === 0) {
+                title.innerText = "Rafa Silva’yı seviyor musun?";
+                image.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Rafa_Silva_20240803.jpg/960px-Rafa_Silva_20240803.jpg"; 
+                resetButtons();
+                step = 1;
+            } else if (step === 1) {
+                // PNG'yi ekrana bas
+                overlayImage.style.display = "block";
+            }
+        });
+
+        // PNG’ye tıklanınca Instagram’a yönlendir
+        overlayImage.addEventListener("click", function() {
+            window.open("https://www.instagram.com/melihu_gur/", "_blank");
         });
     </script>
 </body>
