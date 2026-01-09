@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selamün Alekyüm</title>
     <style>
+        #messageButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
         body {
             font-size: 20px;
             position: relative;
@@ -46,6 +56,9 @@
             object-fit: cover;
             cursor: pointer;
             z-index: 9999;
+
+
+        
         }
     </style>
 </head>
@@ -54,11 +67,21 @@
     <img id="mainImage" src="https://upload.wikimedia.org/wikipedia/tr/9/97/%C5%9Eim%C5%9Fek_McQueen.jpg" alt="Şimşek McQueen">
     <button id="yesButton">Çok Güzel</button>
     <button id="noButton">Kötü</button>
+    <button id="messageButton">Mesaj</button>
+
 
     <!-- Tam ekran PNG (sen kendi linkini buraya koyacaksın) -->
     <img id="overlayImage" src="https://cdn.discordapp.com/attachments/1076118865014173759/1458186850127843379/Adsz.png?ex=695eb9d4&is=695d6854&hm=12d228ff67eb26869e16a2e4642c0512a3fd93ab35c4c5b2e7bc47497ce49d9d&" alt="Overlay">
 
     <script>
+        const messageButton = document.getElementById("messageButton");
+
+messageButton.addEventListener("click", function () {
+    window.location.href = "https://www.melihugur.com.tr/erraba.html";
+});
+
+
+
         const noButton = document.getElementById("noButton");
         const yesButton = document.getElementById("yesButton");
         const title = document.getElementById("mainTitle");
@@ -123,3 +146,4 @@
     </script>
 </body>
 </html>
+
