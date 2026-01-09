@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anonim Mesaj Gönder</title>
+  <style>
+    body{font-family:Arial;background:#0f172a;color:#e5e7eb;display:flex;align-items:center;justify-content:center;min-height:100vh}
+    .card{background:#020617;padding:20px;border-radius:12px;width:100%;max-width:420px}
+    input,textarea,button{width:100%;margin-top:10px;padding:10px;border-radius:8px;border:none}
+    button{background:#2563eb;color:#fff;cursor:pointer}
+    .hidden{display:none}
+    .info{font-size:12px;opacity:.8}
+  </style>
+</head>
+<body>
+<div class="card">
+<h2>Anonim Mesaj Gönder</h2>
+<div id="nameSection">
+<input id="username" placeholder="Kullanıcı adı (anonim için boş bırak)">
+<button onclick="next()">Devam Et</button>
+</div>
+<div id="msgSection" class="hidden">
+<textarea id="msg" placeholder="Mesajını yaz"></textarea>
+<button onclick="send()">Gönder</button>
+<div id="status" class="info"></div>
+</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script>
+const firebaseConfig={
+ apiKey:"AIzaSyDVxXu3pR2QApaREhfIc6FzIDQmm_7P9Nw",
+ authDomain:"melihugurcomtr.firebaseapp.com",
+ databaseURL:"https://melihugurcomtr-default-rtdb.firebaseio.com",
+ projectId:"melihugurcomtr",
+ storageBucket:"melihugurcomtr.appspot.com",
+ messagingSenderId:"544520831641",
+ appId:"1:544520831641:web:92534d7bcdf1d29986ee08"
+};
+firebase.initializeApp(firebaseConfig);
+const db=firebase.database();
+let finalName="";
+function next(){
+ let n=username.value.trim();
+ if(!n){
+  db.ref('anonCounter').transaction(c=>(c||0)+1,(e,ok,s)=>{if(ok){finalName='Anonim-'+s.val();openMsg();}});
+ } else {finalName=n;openMsg();}
+}
+function openMsg(){nameSection.classList.add('hidden');msgSection.classList.remove('hidden');}
+function send(){
+ if(!msg.value.trim())return;
+ db.ref('messages').push({user:finalName,text:msg.value,time:new Date().toISOString()});
+ status.innerText='Gönderildi ✔';msg.value='';
+}
+</script>
+</body>
+</html>
+
+<!-- ================= ADMIN PANEL ================= -->
+<!-- BUNU admin.html OLARAK AYRI DOSYA YAP -->
+<!-- URL: siteadresin/admin.html -->
+
+<!--
+<!DOCTYPE html>
+<html lang="tr">
+<head><meta charset="UTF-8"><title>Admin Panel</title></head>
+<body style="background:#020617;color:white;font-family:Arial">
+<h2>Gelen Mesajlar</h2>
+<ul id="list"></ul>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+<script>
+firebase.initializeApp(firebaseConfig);
+firebase.database().ref('messages').on('child_added',s=>{
+ let li=document.createElement('li');
+ li.innerText=`${s.val().user}: ${s.val().text}`;
+ list.appendChild(li);
+});
+</script>
+</body>
+</html>
+-->
