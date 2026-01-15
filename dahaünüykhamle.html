@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UI Demo</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    margin:0;
+    background:#fff;
+}
+
+/* TOP BAR */
+.top-bar{
+    background:#e9f6f7;
+    text-align:center;
+    font-size:13px;
+    padding:6px;
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    padding:15px 30px;
+    border-bottom:1px solid #eee;
+}
+.logo{
+    font-weight:900;
+    font-size:26px;
+    letter-spacing:2px;
+}
+.search{
+    flex:1;
+}
+.search input{
+    width:100%;
+    padding:10px 15px;
+    border-radius:20px;
+    border:1px solid #ddd;
+}
+.header-icons{
+    display:flex;
+    gap:15px;
+    font-size:14px;
+}
+
+/* MENU */
+.menu{
+    display:flex;
+    gap:20px;
+    padding:10px 30px;
+    border-bottom:1px solid #eee;
+    font-size:14px;
+    overflow-x:auto;
+}
+.menu span{
+    white-space:nowrap;
+    cursor:default;
+}
+
+/* HERO */
+.hero{
+    margin:20px auto;
+    max-width:1100px;
+}
+.hero img{
+    width:100%;
+    border-radius:10px;
+}
+
+/* SMALL CARDS */
+.small-cards{
+    max-width:1100px;
+    margin:20px auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+.small-card{
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:10px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+.small-card img{
+    width:120px;
+    border-radius:8px;
+}
+.small-card button{
+    margin-left:auto;
+    border:2px solid #000;
+    background:#fff;
+    padding:8px 16px;
+    border-radius:8px;
+    font-weight:700;
+}
+
+/* HOT ON SOCIAL */
+.hot{
+    max-width:1100px;
+    margin:40px auto;
+}
+.hot-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+.hot-header h2{
+    margin:0;
+}
+.hot-header button{
+    border:2px solid #000;
+    background:#fff;
+    padding:6px 14px;
+    border-radius:8px;
+    font-weight:700;
+}
+
+.slider-wrapper{
+    position:relative;
+}
+.slider{
+    display:flex;
+    gap:20px;
+    overflow-x:auto;
+}
+.card{
+    min-width:220px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    padding:10px;
+    position:relative;
+}
+.card img{
+    width:100%;
+    height:180px;
+    object-fit:contain;
+}
+.tag{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:#000;
+    color:#fff;
+    font-size:11px;
+    padding:3px 6px;
+    border-radius:6px;
+}
+.fav{
+    position:absolute;
+    top:10px;
+    right:10px;
+}
+.brand{
+    font-weight:700;
+    font-size:13px;
+}
+.name{
+    font-size:13px;
+}
+.price{
+    font-weight:700;
+    margin:6px 0;
+}
+.card button{
+    width:100%;
+    border:2px solid #000;
+    background:#fff;
+    padding:8px;
+    border-radius:8px;
+    font-weight:700;
+}
+.offer-btn{
+    width:100%;
+    padding:10px;
+    border-radius:10px;
+    border:2px solid #000;
+    background:#ffffff;
+    color:#000000;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.offer-btn:hover{
+    background:#333;
+}
+
+.offer-btn:disabled{
+    background:#aaa;
+    border-color:#aaa;
+    cursor:not-allowed;
+}
+
+
+/* MOBILE */
+@media(max-width:768px){
+    .header{
+        flex-wrap:wrap;
+    }
+    .small-cards{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-bar">
+    Sephora Collection Size Up Maskaralar | Sınırlı Süre ₺99,95
+</div>
+
+<div class="header">
+    <div class="logo">SEPHORA</div>
+    <div class="search">
+        <input type="text" placeholder="Ürün, marka, kategori ara...">
+    </div>
+    <div class="header-icons">
+        <span>Mağazalar</span>
+        <span>Giriş</span>
+        <span>♡</span>
+        <span>👜</span>
+    </div>
+</div>
+
+<div class="menu">
+    <span>Sephora Collection</span>
+    <span>En Yeniler</span>
+    <span>Özel Setler</span>
+    <span>Trendler</span>
+    <span>Makyaj</span>
+    <span>Cilt Bakımı</span>
+    <span>Parfüm</span>
+    <span>Mini & More</span>
+    <span>Markalar</span>
+</div>
+
+<div class="hero">
+    <img src="https://www.sephora.com.tr/on/demandware.static/-/Library-Sites-SephoraV2/tr_TR/dwab483109/home-page/mainbanner/TR-MAIN-PROMO-MULTI-SALES-W1-2880x892.png" alt="">
+</div>
+
+<div class="small-cards">
+    <div class="small-card">
+        <img src="https://www.sephora.com.tr/on/demandware.static/-/Library-Sites-SephoraV2/tr_TR/dwc1dfb2d5/home-page/underbanner/TR-UB1-BRAND-SKINCARE-HYDRATE-SEPHORACOLLECTION-W3-686x434.png">
+        <div>Sephora Collection<br><strong>Yeni Hydra Serisi</strong></div>
+        <button>KEŞFET</button>
+    </div>
+    <div class="small-card">
+        <img src="https://www.sephora.com.tr/on/demandware.static/-/Library-Sites-SephoraV2/tr_TR/dw75373602/home-page/underbanner/TR-UB2-KCP-MUP-TNBT-ONESIZE-W3-684x456.png">
+        <div>The Next Big Thing<br><strong>Glow Set</strong></div>
+        <button>KEŞFET</button>
+    </div>
+</div>
+
+<div class="hot">
+    <div class="hot-header">
+        <h2>Hot On Social</h2>
+        <button>KEŞFET</button>
+    </div>
+
+    <div class="slider">
+        <div class="card">
+            <span class="tag">Yeni</span><span class="fav">♡</span>
+            <img src="https://media.sephora.eu/content/dam/digital/pim/published/G/GISOU/796475/388262-media_swatch-1.jpg?scaleWidth=256&scaleMode=fit">
+            <div class="brand">GISOU</div>
+            <div class="name">Honey Glaze Collagen</div>
+            <div class="price">₺1.899,00</div>
+            <button>Keşfet</button>
+        </div>
+
+        <div class="card">
+            <span class="tag">Sınırlı Sayıda</span><span class="fav">♡</span>
+            <img src="https://cdn.discordapp.com/attachments/1076118865014173759/1461446648113659914/image.png?ex=696a95c1&is=69694441&hm=44e66ed73944fcfe522e9195c1aea257e0a1b85fe728ff08682e88cfa1b585ba&">
+            <div class="brand">Engelli Aç</div>
+            <div class="name">sadece istek</div>
+            <div class="price">₺4.299,00</div>
+            <button class="offer-btn">Teklifi kabul et</button>
+        </div>
+
+        <div class="card">
+            <span class="tag">Yeni</span><span class="fav">♡</span>
+            <img src="https://media.sephora.eu/content/dam/digital/pim/published/S/SUMMER_FRIDAYS/670227/320321-media_swatch.jpg?scaleWidth=256&scaleMode=fit">
+            <div class="brand">CLINIQUE</div>
+            <div class="name">Quickliner</div>
+            <div class="price">₺1.315,00</div>
+            <button>Keşfet</button>
+        </div>
+        <div class="card">
+            <span class="tag">Sadece Sephora'da</span><span class="fav">♡</span>
+            <img src="https://cdn.discordapp.com/attachments/1076118865014173759/1461448357841997945/WhatsApp_Image_2026-01-15_at_22.53.28.jpeg?ex=696a9758&is=696945d8&hm=8c613fcbcf107c29504d0a31af9e24b75e4167a953a6fd3f1907dc719008807d&">
+            <div class="brand">Video atacam</div>
+            <div class="name">300TL üzeri -%40</div>
+            <div class="price">₺2.139,00</div>
+            <button class="offer-btn">Teklifi kabul et</button>
+        </div>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll(".offer-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+        const url = btn.getAttribute("data-url") || "https://www.melihugur.com.tr/mcqueen.html";
+        window.open(url, "_blank");
+    });
+});
+</script>
+
+
+</body>
+</html>
