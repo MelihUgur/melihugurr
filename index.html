@@ -1,2 +1,264 @@
-...
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sana Özel...</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #1a237e 0%, #000000 60%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+        }
 
+        #content-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: opacity 1.5s ease-in-out;
+            opacity: 1;
+            z-index: 10;
+        }
+
+        #main-text {
+            font-size: 26px;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            min-height: 40px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        #main-button {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(145deg, #283593, #1a237e);
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(40, 53, 147, 0.8), inset 0 0 20px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s, box-shadow 0.3s, opacity 1.5s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            outline: none;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+
+        #main-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 60px rgba(40, 53, 147, 1), inset 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        #main-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Tıklayınca patlayan çiçekler */
+        .flower {
+            position: absolute;
+            pointer-events: none;
+            font-size: 35px;
+            z-index: 100;
+        }
+
+        /* En son açılacak ekranın kapsayıcısı */
+        #final-screen {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Çiçek sütunları */
+        .flower-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            font-size: 40px;
+            text-align: center;
+            line-height: 1.8;
+            opacity: 0.6; /* Göz yormaması için biraz saydam */
+        }
+
+        /* Sonsuz kayma animasyonları */
+        .scroll-up .inner {
+            animation: scrollU 15s linear infinite;
+        }
+        .scroll-down .inner {
+            animation: scrollD 15s linear infinite;
+        }
+
+        @keyframes scrollU {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+        @keyframes scrollD {
+            0% { transform: translateY(-50%); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Son ekrandaki büyük doğum günü mesajı */
+        #final-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+            z-index: 20;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 1), 0 0 30px #1a237e;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="content-wrapper">
+        <div id="main-text"></div>
+        <button id="main-button"></button>
+    </div>
+
+    <div id="final-screen"></div>
+    <div id="final-message">
+        İyi ki Doğdun Deriyaaa!<br>
+        <span style="font-size: 24px; font-weight: normal; margin-top:15px; display:block;">bu arada halla senden 6 gün büyüğüm</span>
+    </div>
+
+    <script>
+        // ==========================================
+        // AYARLAR: METİNLER
+        // ==========================================
+        const adimlar = [
+            {
+                ustMetin: "Hazırmısın Deriyaaa",
+                butonYazisi: "evet"
+            },
+            {
+                ustMetin: "Eminmisin",
+                butonYazisi: "HEEEEEE"
+            },
+            {
+                ustMetin: "Artık yaşıtız kral",
+                butonYazisi: "🌹"
+            }
+        ];
+        // ==========================================
+
+        let mevcutAdim = 0;
+        const wrapper = document.getElementById('content-wrapper');
+        const mainText = document.getElementById('main-text');
+        const mainButton = document.getElementById('main-button');
+        const finalScreen = document.getElementById('final-screen');
+        const finalMessage = document.getElementById('final-message');
+
+        mainText.innerHTML = adimlar[0].ustMetin;
+        mainButton.innerHTML = adimlar[0].butonYazisi;
+
+        function cicekPatlat(x, y) {
+            const cicekler = ['🌹', '🌷', '🌼', '🌸', '💖', '✨'];
+            const cicekSayisi = 60; 
+
+            for (let i = 0; i < cicekSayisi; i++) {
+                const cicek = document.createElement('div');
+                cicek.innerText = cicekler[Math.floor(Math.random() * cicekler.length)];
+                cicek.className = 'flower';
+                document.body.appendChild(cicek);
+
+                const aci = Math.random() * Math.PI * 2;
+                const mesafe = Math.random() * 500 + 100; 
+                const tx = Math.cos(aci) * mesafe;
+                const ty = Math.sin(aci) * mesafe;
+
+                cicek.style.left = x + 'px';
+                cicek.style.top = y + 'px';
+
+                cicek.animate([
+                    { transform: 'translate(-50%, -50%) scale(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(${Math.random() * 2 + 1}) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+                ], {
+                    duration: 1500 + Math.random() * 2000, 
+                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)'
+                }).onfinish = () => cicek.remove(); 
+            }
+        }
+
+        // Son ekran çiçek şelalesini oluşturan fonksiyon
+        function cicekSelalesiOlustur() {
+            const cicekTipleri = ['🌹', '🌷', '🌼', '🌸', '🌺', '🌻', '💮'];
+            const sutunSayisi = 12; // Ekrana yayılacak sütun sayısı
+            
+            for(let i=0; i<sutunSayisi; i++) {
+                const col = document.createElement('div');
+                col.className = 'flower-col ' + (i % 2 === 0 ? 'scroll-up' : 'scroll-down');
+                
+                const inner = document.createElement('div');
+                inner.className = 'inner';
+                
+                // Sonsuz kayma için çiçek stringini uzun tutuyoruz (2 katı)
+                let cicekString = "";
+                for(let j=0; j<40; j++) {
+                    cicekString += cicekTipleri[Math.floor(Math.random() * cicekTipleri.length)] + "<br>";
+                }
+                // Kusursuz döngü için aynı stringi iki kere ekliyoruz
+                inner.innerHTML = cicekString + cicekString;
+                
+                col.appendChild(inner);
+                finalScreen.appendChild(col);
+            }
+        }
+
+        mainButton.addEventListener('click', () => {
+            const rect = mainButton.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            cicekPatlat(centerX, centerY);
+            mevcutAdim++;
+            wrapper.style.opacity = 0;
+
+            setTimeout(() => {
+                if (mevcutAdim < adimlar.length) {
+                    mainText.innerHTML = adimlar[mevcutAdim].ustMetin;
+                    mainButton.innerHTML = adimlar[mevcutAdim].butonYazisi;
+                    wrapper.style.opacity = 1;
+                } else {
+                    // Son ekrana geçiş
+                    wrapper.style.display = "none"; 
+                    cicekSelalesiOlustur();
+                    finalScreen.style.opacity = 1;
+                    
+                    // Yazı efektiyle gelsin
+                    setTimeout(() => {
+                        finalMessage.style.opacity = 1;
+                        finalMessage.style.transform = "translate(-50%, -50%) scale(1)";
+                    }, 500);
+                }
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
