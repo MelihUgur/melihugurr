@@ -137,6 +137,8 @@
 </head>
 <body>
 
+    <audio id="bg-music" src="muzik.mp3"></audio>
+
     <div id="content-wrapper">
         <div id="main-text"></div>
         <button id="main-button"></button>
@@ -250,6 +252,10 @@
                     wrapper.style.display = "none"; 
                     cicekSelalesiOlustur();
                     finalScreen.style.opacity = 1;
+                    
+                    // Son ekrana gelindiğinde müziği başlat
+                    const muzik = document.getElementById('bg-music');
+                    muzik.play().catch(e => console.log("Ses oynatma hatası:", e));
                     
                     // Yazı efektiyle gelsin
                     setTimeout(() => {
